@@ -53,6 +53,9 @@ function flushSchedulerQueue () {
   // as we run existing watchers
   for (index = 0; index < queue.length; index++) {
     watcher = queue[index]
+    if (watcher.before) {
+      watcher.before()
+    }
     id = watcher.id
     has[id] = null
     watcher.run()
@@ -142,6 +145,11 @@ export function queueWatcher (watcher: Watcher) {
     // queue the flush
     if (!waiting) {
       waiting = true
+
+      if (process.env.NODE_ENV !== 'production' && !config.async) {
+        flushSchedulerQueue()
+        return
+      }
       nextTick(flushSchedulerQueue)
     }
   }

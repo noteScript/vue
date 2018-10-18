@@ -26,7 +26,7 @@ export default class VNode {
   ssrContext: Object | void;
   fnContext: Component | void; // real context vm for functional nodes
   fnOptions: ?ComponentOptions; // for SSR caching
-  fnScopeId: ?string; // functioanl scope id support
+  fnScopeId: ?string; // functional scope id support
 
   constructor (
     tag?: string,
@@ -103,6 +103,7 @@ export function cloneVNode (vnode: VNode): VNode {
   cloned.fnContext = vnode.fnContext
   cloned.fnOptions = vnode.fnOptions
   cloned.fnScopeId = vnode.fnScopeId
+  cloned.asyncMeta = vnode.asyncMeta
   cloned.isCloned = true
   return cloned
 }
